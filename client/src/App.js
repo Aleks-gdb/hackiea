@@ -1,44 +1,18 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from './hackiea.png';
 import './App.css';
 import Randomizer from './Randomizer';
 
 class App extends Component {
-
-constructor(){
-  super();
-  this.state = {
-    buzzwords:'',
-    descriptions:'',
-    apptypes:'',
-    subjects:'',
-  }
-}
-
- 
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
+          <p>Want a random programming buzzword?
           </p>
-          <p>Lorem ipsum jdfoijdsif dsifdsaoi foidsa foidsa jfoidsajf
-            difjodsfoijdsaofjdsaofjdsaofjoidsajfoidsaf
-            ijsaofjdsofjodsafjdsaoifjos
-          </p>
-          <Randomizer></Randomizer>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          
+          <Randomizer/>
          </header>
       </div>
     );

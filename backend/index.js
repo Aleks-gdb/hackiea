@@ -21,7 +21,7 @@ app.listen(PORT, () => {
     console.log(`Server is running on PORT ${PORT}`);
 });
 
-app.get('/',function(req,res){
+router.get('/',function(req,res){
     res.send({express : "hello"});
 });
 
@@ -29,7 +29,7 @@ app.get('/',function(req,res){
 // Creating a api function to get all the database entries from collections
 router.get('/buzzwords', function(req,res){
     // Using find() to retrieve all of the entries from buzz and print to console.
-    res.send({express: buzz.find({},function(err,docs){
+    res.json({express: buzz.find({},function(err,docs){
         //if there's no error
         if(!err){
             //print
@@ -40,7 +40,7 @@ router.get('/buzzwords', function(req,res){
 
 router.get('/apptypes', function(req,res){
     // Using find() to retrieve all of the entries from apptypes and print to console.
-    res.send({express: apptype.find({},function(err,docs){
+    res.json({express: apptype.find({},function(err,docs){
         //if there's no error
         if(!err){
             //print
@@ -51,7 +51,7 @@ router.get('/apptypes', function(req,res){
 
 router.get('/descriptions', function(req,res){
     // Using find() to retrieve all of the entries from desc and print to console.
-    res.send({express: desc.find({},function(err,docs){
+    res.json({express: desc.find({},function(err,docs){
         //if there's no error
         if(!err){
             //print
@@ -62,7 +62,7 @@ router.get('/descriptions', function(req,res){
 
 router.get('/subjects', function(req,res){
     // Using find() to retrieve all of the entries from subjects and print to console.
-    res.send({express: subject.find({},function(err,docs){
+    res.json({express: subject.find({},function(err,docs){
         //if there's no error
         if(!err){
             //print

@@ -1,41 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta name="theme-color" content="#000000" />
-    <!--
-      manifest.json provides metadata used when your web app is added to the
-      homescreen on Android. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+<meta charset="utf-8">
+<style>
+	* { box-sizing: border-box; }
+	li, ul { padding: 0; margin:0; }
+	input {
+		margin: 4px 0;
+		font-family: Arial, sans-serif;
+		font-size: 16px;
+		padding: 5px 4px 4px;
+		height: 30px;
+		width: 350px;
+	}
+	#slot li {
+		font-family: Arial, sans-serif;
+		font-size: 16px;
+		padding: 6px 4px 6px 6px;
+		line-height: normal;
+		height: 30px;
+		overflow: hidden;
+	}
+	#slot_wrapper {
+		position: relative;
+	}
+	.jSlots-wrapper {
+		margin: 4px 0;
+    	overflow: hidden; /* to hide the magic */
+    	height: 29px; /* whatever the height of your list items are */
+    	width: 300px;
+    	position: absolute;
+    	top: 0px;
+    	display: none;
+	}
+	#slot {
+		display: none;
+	}
+</style>
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+<div id="slot_wrapper">
+    <input type="text" class="search">
+    <ul id="slot">
+    	<!-- Initial list needs the height it will have when filled for jSlots to run correctly. You could fill with real values instead -->
+    	<li>test</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li>
+    </ul>
+</div>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+<button type="button" id="random_location">Pick a city</button>
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
-</html>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+<script src="jquery.jSlots.js"></script>
+<script>
+
+$(function() {
+
+var msa = [ { _id: 5c444e1c1c9d440000098e37, name: 'hackathons' },
+  { _id: 5c444e1c1c9d440000098e37, name: 'homeless people' },
+  { _id: 5c444e1c1c9d440000098e37, name: 'athletes' },
+  { _id: 5c444e1c1c9d440000098e37, name: 'pets' },
+  { _id: 5c444e1c1c9d440000098e37, name: 'deaf people' },
+  { _id: 5c444e1c1c9d440000098e37, name: 'gamers' },
+  { _id: 5c444e1c1c9d440000098e37, name: 'programmers' },
+],
+  $input = $('input'),
+  random_index;
+
+//make list for slots recursively and call spin when complete
+function makeSlotList(list){
+    	//could choose one random index and then populate with next 18 values instead, but need to account for looping at end
+        if(list.length<20){//length chosen based on appearance of spin, can be changed
+            var index = _.random(msa.length-1);
+            if(list.length===1){
+            	/*
+            		This index will be second item in the list, which is our winning number
+            		Save this for future reference
+					Instead of saving it, we could get the index attribute from the list item we end on
+				*/
+                random_index = index;
+            }
+            list.push( '<li index='+_.random(msa.length-1)+'>'+msa[index].name.toString()+'</li>' );
+            return makeSlotList(list);
+        } else {
+            //slot list is complete
+            //clear search field
+            $input.val('');
+            //attach list, show jslots, run animation
+            $('#slot').html(list.join('')).parent().show().trigger('spin');
+            return list;
+        }
+    }
+
+    //before spinning, build out list to spin through and insert into the DOM
+    function makeSlots(){
+        //start with current value
+        var list = ['<li>'+$input.val()+'</li>'];
+
+        //call recursive list builder that won't spin slots until it's finished
+        makeSlotList(list);
+    }
+
+    $('#slot').jSlots({
+        number: 1,
+        spinner : '.jSlots-wrapper',
+        spinEvent: 'spin',
+        time: 300,
+        loops: 1,
+        endNum: 2,//spins backwards through the list. endNum 1 ends on the same value we started on
+        onEnd: function(finalElement){
+            //set result
+            $input.val(msa[random_index].name.toString());
+            //hide spinner
+            $(this.spinner).hide();
+        }
+    });
+
+    //bind random button
+    $('#random_location').on('click', makeSlots);
+});
+
+</script>

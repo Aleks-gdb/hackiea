@@ -36,7 +36,7 @@ router.get('/buzzwords', function(req,res){
             res.send(docs);
         } else{ throw err; }
     }
-)});
+)});});
 
 router.get('/apptypes', function(req,res){
     // Using find() to retrieve all of the entries from apptypes and print to console.
@@ -47,7 +47,7 @@ router.get('/apptypes', function(req,res){
             res.send(docs);
         } else{ throw err; }
     }
-)});
+)});});
 
 router.get('/descriptions', function(req,res){
     // Using find() to retrieve all of the entries from desc and print to console.
@@ -58,7 +58,7 @@ router.get('/descriptions', function(req,res){
             res.send(docs);
         } else{ throw err; }
     }
-)});
+)});});
 
 router.get('/subjects', function(req,res){
     // Using find() to retrieve all of the entries from subjects and print to console.
@@ -69,6 +69,6 @@ router.get('/subjects', function(req,res){
             res.send(docs);
         } else{ throw err; }
     }
-)});
+)});});
 
-app.use('/api',router);
+app.use('/api',router)

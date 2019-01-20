@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Randomizer from './Randomizer';
 
 class App extends Component {
 
@@ -14,56 +15,7 @@ constructor(){
   }
 }
 
-  componentDidMount() {
-    this.callBuzzwords()
-    .then(res => this.setState({buzzwords: res.express}))
-    .catch(err => console.log(err));
-    this.callAppTypes()
-    .then(res => this.setState({apptypes: res.express}))
-    .catch(err => console.log(err));
-    this.callDescriptions()
-    .then(res => this.setState({descriptions: res.express}))
-    .catch(err => console.log(err));
-    this.callSubjects()
-    .then(res => this.setState({descriptions: res.express}))
-    .catch(err => console.log(err));
-  };
-
-  callBuzzwords = async () => {
-    const response = await fetch('/api/buzzwords');
-    const body = await response;
-    console.log(body);
-    if (response.status !== 200) throw Error(body.message);
-
-    return body;
-  };
-
-  callAppTypes = async () => {
-    const response = await fetch('/api/apptypes');
-    const body = await response;
-    console.log(body);
-    if (response.status !== 200) throw Error(body.message);
-
-    return body;
-  }
-
-  callDescriptions = async () => {
-    const response = await fetch('/api/descriptions');
-    const body = await response;
-    console.log(body);
-    if (response.status !== 200) throw Error(body.message);
-
-    return body;
-  }
-
-  callSubjects = async () => {
-    const response = await fetch('/api/subjects');
-    const body = await response;
-    console.log(body);
-    if (response.status !== 200) throw Error(body.message);
-
-    return body;
-  }
+ 
 
   render() {
     return (
@@ -77,6 +29,7 @@ constructor(){
             difjodsfoijdsaofjdsaofjdsaofjoidsajfoidsaf
             ijsaofjdsofjodsafjdsaoifjos
           </p>
+          <Randomizer></Randomizer>
           <a
             className="App-link"
             href="https://reactjs.org"
@@ -85,7 +38,8 @@ constructor(){
           >
             Learn React
           </a>
-        </header>
+          
+         </header>
       </div>
     );
   }

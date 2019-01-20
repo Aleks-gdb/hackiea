@@ -29,48 +29,44 @@ app.get('/',function(req,res){
 // Creating a api function to get all the database entries from collections
 router.get('/buzzwords', function(req,res){
     // Using find() to retrieve all of the entries from buzz and print to console.
-    return buzz.find({},function(err,docs){
+    res.send({express: buzz.find({},function(err,docs){
         //if there's no error
         if(!err){
             //print
             res.send(docs);
-            process.exit();
         } else{ throw err; }
     }
 )});
 
 router.get('/apptypes', function(req,res){
     // Using find() to retrieve all of the entries from apptypes and print to console.
-    return apptype.find({},function(err,docs){
+    res.send({express: apptype.find({},function(err,docs){
         //if there's no error
         if(!err){
             //print
             res.send(docs);
-            process.exit();
         } else{ throw err; }
     }
 )});
 
 router.get('/descriptions', function(req,res){
     // Using find() to retrieve all of the entries from desc and print to console.
-    return desc.find({},function(err,docs){
+    res.send({express: desc.find({},function(err,docs){
         //if there's no error
         if(!err){
             //print
             res.send(docs);
-            process.exit();
         } else{ throw err; }
     }
 )});
 
 router.get('/subjects', function(req,res){
     // Using find() to retrieve all of the entries from subjects and print to console.
-    return subject.find({},function(err,docs){
+    res.send({express: subject.find({},function(err,docs){
         //if there's no error
         if(!err){
             //print
             res.send(docs);
-            process.exit();
         } else{ throw err; }
     }
 )});

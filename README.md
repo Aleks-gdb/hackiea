@@ -48,6 +48,9 @@ The frontend (client) will be running locally through port localhost:3000.
 ## Authors
 
 Aleksandra Dziewulska
+
 Elizabeth Him
+
 Tiffany Lam
+
 Philip Poppler

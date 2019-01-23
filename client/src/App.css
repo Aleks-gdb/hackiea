@@ -29,3 +29,9 @@
     transform: rotate(360deg);
   }
 }
+
+.slot-item{
+  height:100%;
+  width:100%;
+}
+

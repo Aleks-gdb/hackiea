@@ -60,7 +60,7 @@ class Randomizer extends Component {
     // after retrieving the response save it as a json object
     const body = await response.json();
     // set the state of buzzwords 
-    this.setState({ buzzwords: body })
+    this.setState({ buzzwords: body.buzzwords })
     console.log('res', body);
     // if the response isn't 'OK' (200), throw an error
     if (response.status !== 200) throw Error(body.message);
@@ -84,8 +84,8 @@ class Randomizer extends Component {
     // after retrieving the response save it as a json object
     const body = await response.json();
     // set the state of apptypes
-    this.setState({ apptypes: body })
-    console.log(body);
+    this.setState({ apptypes: body.apptypes })
+    console.log('res', body);
     // if the response isn't 'OK' (200), throw an error
     if (response.status !== 200) throw Error(body.message);
 
@@ -107,10 +107,10 @@ class Randomizer extends Component {
     // define the responsde and wait for the backend function to return
     const response = await fetch('/api/descriptions');
     // after retrieving the response save it as a json object
-    const body = await response;
+    const body = await response.json();
     // set the state of descriptions
-    this.setState({ descriptions: body })
-    console.log(body);
+    this.setState({ descriptions: body.descriptions })
+    console.log('res', body);
     // if the response isn't 'OK' (200), throw an error
     if (response.status !== 200) throw Error(body.message);
 
@@ -131,10 +131,10 @@ class Randomizer extends Component {
     // define the response and wait for the backend function to return
     const response = await fetch('/api/subjects');
     // after retrieving the response save it as a json object
-    const body = await response;
+    const body = await response.json();
     // set the state of descriptions
-    this.setState({ subjects: body })
-    console.log(body);
+    this.setState({ subjects: body.subjects })
+    console.log('res', body);
     // if the response isn't 'OK' (200), throw an error
     if (response.status !== 200) throw Error(body.message);
 
@@ -152,8 +152,9 @@ class Randomizer extends Component {
           * 2. Get Slot element to work. Refer to their repository: https://github.com/ygkn/react-slot-machine 
           */}
         <Slot duration={this.state.duration} target={this.state.turn ? this.state.target : 0} times={this.state.times}>
-          {buzzwords.map(b => <div className="contianer">{b.text}</div>)}
+          {buzzwords.map(b => <p>{b.text}</p>)}
         </Slot>
+        <button onClick={() => this.setState({ target: Math.floor(Math.random() * (buzzwords.length - 2)) + 1 })}>Randomize!</button>
       </div>
     );
   }

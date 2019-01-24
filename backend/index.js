@@ -39,6 +39,7 @@ const buzz = mongoose.model('Buzzword', new mongoose.Schema({ text: String }), '
 });
 const apptype = mongoose.model('App Type', new mongoose.Schema({ text: String }), 'App Type').find({}, function (err, docs) {
   apptypes = docs;
+  console.log(apptypes);
 })
 const desc = mongoose.model('Description', new mongoose.Schema({ text: String }), 'Description').find({}, function (err, docs) { 
   descriptions = docs;
@@ -61,6 +62,9 @@ router.get('/', function (req, res) {
   res.send({ express: "hello" });
 });
 
+router.get('/hello', function (req,res){
+  res.send({express: "hello again!"});
+});
 
 /** 
  * localhost:5000/api/buzzwords
@@ -74,12 +78,7 @@ router.get('/buzzwords', function (req, res) {
    * 
    * 'express' is the name of our entire buzzword array
    */
-  //console.log(buzzwords);
-  res.json({ buzzwords: buzzwords });
-  // if(!err){
-  //     //print
-  //     res.json(docs);
-  // } else{ throw err; }
+  res.json({ buzzArray: buzzwords });
 }
 );
 
@@ -96,7 +95,7 @@ router.get('/apptypes', function (req, res) {
    * 'express' is the name of our entire buzzword array
    */
   //console.log(apptypes);
-  res.json({ apptypes: apptypes });
+  res.json({ appArray: apptypes });
 });
 
 /**
@@ -112,7 +111,7 @@ router.get('/descriptions', function (req, res) {
    * 'express' is the name of our entire buzzword array
    */
   //console.log(descriptions);
-  res.json({ descriptions: descriptions });
+  res.json({ descArray: descriptions });
 });
 
 /**
@@ -128,7 +127,7 @@ router.get('/subjects', function (req, res) {
    * 'express' is the name of our entire buzzword array
    */
   //console.log(subjects);
-  res.json({ subjects: subjects });
+  res.json({ subjArray: subjects });
 });
 
 /**

@@ -59,9 +59,11 @@ class Randomizer extends Component {
     const response = await fetch('/api/buzzwords');
     // after retrieving the response save it as a json object
     const body = await response.json();
-    // set the state of buzzwords 
-    this.setState({ buzzwords: body.buzzwords })
-    console.log('res', body);
+    // Our state 'buzzwords' is being set, and within the response in the api, our 
+    // json response has a property called 'buzzArray', which is the array of all the buzzwords.
+    // Therefore we're setting our state property of buzzwords = the array of buzzwords
+    this.setState({ buzzwords: body.buzzArray })
+    console.log('res', this.state.buzzwords);
     // if the response isn't 'OK' (200), throw an error
     if (response.status !== 200) throw Error(body.message);
 
@@ -83,9 +85,11 @@ class Randomizer extends Component {
     const response = await fetch('/api/apptypes');
     // after retrieving the response save it as a json object
     const body = await response.json();
-    // set the state of apptypes
-    this.setState({ apptypes: body.apptypes })
-    console.log('res', body);
+    // Our state 'apptypes' is being set, and within the response in the api, our 
+    // json response has a property called 'appArray', which is the array of all the app types.
+    // Therefore we're setting our state property of apptypes = the array of apptypes
+    this.setState({ apptypes: body.appArray })
+    console.log('res', this.state.apptypes);
     // if the response isn't 'OK' (200), throw an error
     if (response.status !== 200) throw Error(body.message);
 
@@ -108,9 +112,11 @@ class Randomizer extends Component {
     const response = await fetch('/api/descriptions');
     // after retrieving the response save it as a json object
     const body = await response.json();
-    // set the state of descriptions
-    this.setState({ descriptions: body.descriptions })
-    console.log('res', body);
+    // Our state 'descriptions' is being set, and within the response in the api, our 
+    // json response has a property called 'descArray', which is the array of all the app types.
+    // Therefore we're setting our state property of descriptions = the array of descriptions
+    this.setState({ descriptions: body.descArray })
+    console.log('res', this.state.descriptions);
     // if the response isn't 'OK' (200), throw an error
     if (response.status !== 200) throw Error(body.message);
 
@@ -132,9 +138,11 @@ class Randomizer extends Component {
     const response = await fetch('/api/subjects');
     // after retrieving the response save it as a json object
     const body = await response.json();
-    // set the state of descriptions
-    this.setState({ subjects: body.subjects })
-    console.log('res', body);
+    // Our state 'subjects' is being set, and within the response in the api, our 
+    // json response has a property called 'subjArray', which is the array of all the app types.
+    // Therefore we're setting our state property of subjects = the array of subjects
+    this.setState({ subjects: body.subjArray })
+    console.log('res', this.state.subjects);
     // if the response isn't 'OK' (200), throw an error
     if (response.status !== 200) throw Error(body.message);
 
@@ -144,9 +152,22 @@ class Randomizer extends Component {
   // Returns the specified html code
   render() {
     const { buzzwords } = this.state;
+    console.log(buzzwords);
+    // Empty check to see if buzzword array is empty
+    // This allows us to wait to render the information by putting the loading tag  
+    if (buzzwords.length === 0) {
+      // Return the loading tag 
+      return <p>Loading</p>
+    }
+
+    // Retrieve a random buzzword 
+    const buzzword = buzzwords[Math.floor(Math.random() * Math.floor(buzzwords.length))];
     return (
       <div>
         <h1>Buzzword Randomizer</h1>
+        {/* Because we had the empty check above to make sure buzzwords was loaded, we can now load
+        buzzword */}
+        <p>Random buzzword: {buzzword.text}</p>
         {/* TODO: 
           * 1. Print out an individual element within one of the state arrays (buzzword, in this case)
           * 2. Get Slot element to work. Refer to their repository: https://github.com/ygkn/react-slot-machine 
